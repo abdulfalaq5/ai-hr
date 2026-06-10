@@ -32,6 +32,8 @@ services:
     volumes:
       # Persist uploaded PDFs across container restarts
       - ./documents:/app/documents
+    ports:
+      - "9004:9004"
     networks:
       - infra_net
     healthcheck:
