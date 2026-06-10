@@ -1,0 +1,40 @@
+{
+  "name": "ai-hr",
+  "version": "1.0.0",
+  "description": "AI HR Agent — HR Document Knowledge Base & Q&A",
+  "main": "dist/app.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "migrate:latest": "knex --knexfile dist/database/knex.js migrate:latest",
+    "migrate:rollback": "knex --knexfile dist/database/knex.js migrate:rollback",
+    "migrate:make": "knex --knexfile src/database/knex.ts migrate:make -x ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "knex": "^3.1.0",
+    "multer": "^2.1.1",
+    "openai": "^4.40.0",
+    "pdf-parse": "^1.1.1",
+    "pg": "^8.11.5",
+    "uuid": "^11.1.1",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^22.0.0",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/pg": "^8.11.5",
+    "@types/uuid": "^9.0.8",
+    "tsx": "^4.9.0",
+    "typescript": "^5.4.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

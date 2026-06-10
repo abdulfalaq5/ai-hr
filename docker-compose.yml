@@ -1,0 +1,49 @@
+# =============================================================================
+# AI-HR — Docker Compose
+# =============================================================================
+# Usage:
+#   cp .env.example .env && nano .env
+#   docker compose up -d
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # AI-HR (HR Knowledge Agent)
+  # ---------------------------------------------------------------------------
+  ai-hr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-hr
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 9004
+      NODE_ENV: ${NODE_ENV:-production}
+      POSTGRES_HOST: ${POSTGRES_HOST:-shared-prod-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-ai_hr}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-openai/gpt-4o}
+    volumes:
+      # Persist uploaded PDFs across container restarts
+      - ./documents:/app/documents
+    networks:
+      - infra_net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9004/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  infra_net:
+    external: true
+    name: infra_net

@@ -1,0 +1,38 @@
+# Environment variables - NEVER commit these
+.env
+*.env.local
+*.env.production
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+*.js.map
+
+# TypeScript incremental build
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Docker
+docker-compose.override.yml
+
+# PDF documents (binary, store separately)
+documents/*.pdf
